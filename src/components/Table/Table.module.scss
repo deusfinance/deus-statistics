@@ -1,0 +1,44 @@
+.main {
+  .headers {
+    padding-left: 30px;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 10px;
+    .header {
+      text-align: left;
+      font-family: Edu Monument Grotesk Mono;
+      font-weight: normal;
+      font-size: 15px;
+      line-height: 21px;
+      color: #FFFFFF;
+    }
+  }
+  .rows {
+    background-color: #18181d;
+    border: 2px solid #1C1C1C;
+    border-radius: 6px;
+    .row {
+      height: 90px;
+      border-bottom: 1px solid #8b8c8e;
+      padding-left: 30px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      .col {
+        font-family: Edu Monument Grotesk Semi-Mono;
+        font-weight: 400;
+        font-size: 20px;
+        line-height: 28px;
+        color: #FFFFFF;
+        .smallText {
+          font-size: 12.5px;
+          line-height: 17px;
+          color: rgba(255, 255, 255, 0.5);
+        }
+      }
+    }
+    .noBottomBorder {
+      border-bottom-width: 0px;
+    }
+  }
+}

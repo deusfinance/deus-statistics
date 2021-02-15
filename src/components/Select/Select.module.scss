@@ -1,0 +1,28 @@
+.main {
+  display: flex;
+  flex-direction: row;
+  .item {
+    width: 210px;
+    height: 35px;
+    border-radius: 6px;
+    border-width: 1px;
+    border-style: solid;
+    background-color: #141a1a;
+    color:#868686;
+    border-color: #4c5050;
+  }
+  .left {
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+  }
+  .right {
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    border-left-width: 0px;
+  }
+  .activeItem {
+    background-color: #192827;
+    color: white;
+    border-color: #8c9392;
+  }
+}

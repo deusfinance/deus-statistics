@@ -1,0 +1,61 @@
+.main {
+  .topBoxes {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 50px;
+    .eachBox {
+      width: 32%;
+    }
+    .firstBox {
+      width: calc(32% - 60px);
+      background: linear-gradient(90deg, rgba(7, 121, 228, 0.6) -0.01%, rgba(29, 211, 189, 0.6) 93.42%), #FFFFFF;
+    }
+    .secondBox {
+      width: calc(32% - 60px);
+      background: linear-gradient(90deg, rgba(7, 121, 228, 0.6) -0.01%, rgba(234, 44, 98, 0.6) 93.44%), #FFFFFF;
+    }
+    .thirdBox {
+      width: calc(32% - 60px);
+      background: linear-gradient(90deg, rgba(109, 106, 253, 0.75) 0%, rgba(175, 229, 255, 0.75) 100%), #FFFFFF;
+    }
+  }
+  .connectedWallet {
+    font-family: Edu Monument Grotesk Semi-Mono;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 20px;
+    text-align: left;
+    color: white;
+    margin-left: 30px;
+    margin-bottom: 25px;
+  }
+  .infoBoxes {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 70px;
+    .eachBox {
+      width: 32%;
+    }
+  }
+  .selectDiv {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .table {
+    margin-top: 30px;
+    .row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      .usdText {
+        width: 150px;
+      }
+    }
+  }
+}

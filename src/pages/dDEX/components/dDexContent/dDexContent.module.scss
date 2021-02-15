@@ -1,0 +1,35 @@
+.main {
+  .topBoxes {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 50px;
+    .eachBox {
+      width: 32%;
+    }
+    .firstBox {
+      width: calc(32% - 60px);
+      background: linear-gradient(90deg, rgba(7, 121, 228, 0.35) -0.01%, rgba(234, 44, 98, 0.35) 93.44%), #FFFFFF;
+    }
+    .secondBox {
+      width: calc(32% - 60px);
+      background: linear-gradient(90deg, rgba(7, 121, 228, 0.35) -0.01%, rgba(234, 44, 98, 0.35) 93.44%), #FFFFFF;
+    }
+    .thirdBox {
+      width: calc(32% - 60px);
+      background: linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%), linear-gradient(224.74deg, #C4EB89 0.19%, #5EC4D6 100.22%);
+    }
+  }
+  .table {
+    margin-top: 30px;
+    .row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      .usdText {
+        width: 150px;
+      }
+    }
+  }
+}

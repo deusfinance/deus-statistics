@@ -1,0 +1,46 @@
+.main {
+  border-radius: 6px;
+  background-color: #18181d;
+  border: 2px solid #363636;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 150px;
+  .topText {
+    font-family: Edu Monument Grotesk Semi-Mono;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 20px;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  .bottomText {
+    font-family: Edu Monument Grotesk Semi-Mono;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 20px;
+    text-align: center;
+  }
+  .gray {
+    color: rgba(255, 255, 255, 0.5);
+  }
+  .white {
+    color: white;
+  }
+  .topBar {
+    width: 113px;
+    height: 15px;
+    background: rgba(206, 206, 206, 0.2);
+    border-radius: 3px;
+    margin-bottom: 11px;
+  }
+  .bottomBar {
+    width: 193px;
+    height: 15px;
+    background: rgba(206, 206, 206, 0.2);
+    border-radius: 3px;
+  }
+}

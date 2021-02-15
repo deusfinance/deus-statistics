@@ -1,12 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import { Web3ReactProvider } from '@web3-react/core'
+
+import './index.scss';
+import Routes from 'routes';
+import { getLibrary } from './utils/utils';
+
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Web3ReactProvider getLibrary={getLibrary}>
+      <Routes />
+    </Web3ReactProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

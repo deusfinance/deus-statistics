@@ -1,0 +1,23 @@
+.main {
+  .topBoxes {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 70px;
+    .eachBox {
+      width: 32%;
+    }
+  }
+  .table {
+    margin-top: 30px;
+    .row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      .usdText {
+        width: 150px;
+      }
+    }
+  }
+}

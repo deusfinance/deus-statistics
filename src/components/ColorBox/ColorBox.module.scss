@@ -1,0 +1,60 @@
+.box {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 23px 30px;
+  border-radius: 6px;
+  border: 2px solid white;
+  height: 300px;
+  .topText {
+    font-family: Edu Monument Grotesk Semi-Mono;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 28px;
+    text-transform: uppercase;
+    color: #000000;
+  }
+  .mainText {
+    font-family: Monument Grotesk;
+    font-weight: 400;
+    font-size: 35px;
+    line-height: 48px;
+    text-align: center;
+  }
+  .bottom {
+    width: 100%;
+    .text {
+      font-family: Edu Monument Grotesk Semi-Mono;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 20px;
+    }
+    .gray {
+      color: rgba(0,0,0,0.5);
+    }
+    .syncDiv {
+      display: flex;
+      flex-direction: row;
+      .syncText {
+        font-family: Monument Grotesk;
+        font-weight: 300;
+        font-size: 25px;
+        font-style: normal;
+        line-height: 34px;
+        margin-right: 10px;
+        color: #000000;
+        .smallText {
+          font-family: Roboto;
+          font-style: normal;
+          font-weight: normal;
+          font-size: 12px;
+          line-height: 14px;
+          text-align: left;
+          color: rgba(0, 0, 0, 0.5);
+        }
+      }
+    }
+  }
+}

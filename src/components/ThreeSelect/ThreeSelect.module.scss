@@ -1,0 +1,51 @@
+.main {
+  display: flex;
+  flex-direction: row;
+  .item {
+    width: 210px;
+    height: 35px;
+    border-radius: 6px;
+    border-width: 1px;
+    border-style: solid;
+    background-color: #141a1a;
+    color:#868686;
+    border-color: #4c5050;
+  }
+  .first {
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+  }
+  .second {
+    border-radius: 0px;
+    border-left-width: 0px;
+  }
+  .third {
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    border-left-width: 0px;
+  }
+  .firstActiveItem {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 100%), linear-gradient(90deg, #0779E4 -0.01%, #1DD3BD 93.42%);
+    color: black;
+    border-color: #1C1C1C;
+    border-left-width: 0px;
+    border-right-width: 0px;
+    border-bottom-width: 0px;
+  }
+  .secondActiveItem {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 100%), linear-gradient(224.74deg, #C4EB89 0.19%, #5EC4D6 100.22%);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    color: black;
+    border-left-width: 0px;
+    border-right-width: 0px;
+    border-bottom-width: 0px;
+  }
+  .thirdActiveItem {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 100%), linear-gradient(90deg, #0779E4 -0.01%, #EA2C62 93.44%);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    color: black;
+    border-left-width: 0px;
+    border-right-width: 0px;
+    border-bottom-width: 0px;
+  }
+}

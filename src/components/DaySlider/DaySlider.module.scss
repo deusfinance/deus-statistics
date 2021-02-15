@@ -1,0 +1,31 @@
+.slider {
+  width: 100%;
+  :global(.ant-slider-mark-text) {
+    display: none;
+  }
+  :global(.ant-slider-handle) {
+    background: linear-gradient(90deg, #0779E4 -0.01%, #1DD3BD 93.42%);
+    border: none;
+    left: 2px;
+  }
+  :global(.ant-slider-dot) {
+    top: -4px;
+  }
+  :global(.ant-slider-with-marks) {
+    margin-bottom: 0px;
+    margin-top: 0px;
+  }
+}
+
+:global(.ant-tooltip-inner) {
+  background-color: #efefef;
+  width: 75px;
+  color: black;
+  min-height: 20px;
+  border-radius: 3px;
+  padding-left: 15px;
+}
+:global(.ant-tooltip-arrow-content) {
+  background-color: #efefef;
+
+}

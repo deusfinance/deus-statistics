@@ -2,12 +2,13 @@ import React from 'react';
 import cx from 'classnames';
 
 import styles from './ColorBox.module.scss';
+import { formatCol, formatSecondText } from 'utils/formatUI';
 
 export default function ColorBox({ topText, mainText, cSupply, mCap, vLocked, syncs, synchronizers, bottomText, className }) {
   return (
     <div className={cx(styles.box, className)}>
       <div className={styles.topText}>{topText}</div>
-      <div className={styles.mainText}>{mainText}</div>
+      <div className={styles.mainText}>{formatCol(mainText)}</div>
       <div className={styles.bottom}>
         {
           bottomText ? <div style={{ height: 48 }} /> : syncs ? (
@@ -24,9 +25,9 @@ export default function ColorBox({ topText, mainText, cSupply, mCap, vLocked, sy
             </div>
           ) : (
             <>
-              <div className={styles.text}>Circulating Supply: {cSupply}</div>
-              <div className={styles.text}>Market Cap: {mCap}</div>
-              <div className={styles.text}>Value Locked: {vLocked}</div>
+              <div className={styles.text}>Circulating Supply: {formatSecondText(cSupply)}</div>
+              <div className={styles.text}>Market Cap: {formatSecondText(mCap)}</div>
+              <div className={styles.text}>Value Locked: {formatSecondText(vLocked)}</div>
             </>
           )
         }

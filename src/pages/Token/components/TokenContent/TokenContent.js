@@ -23,7 +23,7 @@ export default function Staking() {
       <div className={styles.topBoxes}>
         <ColorBox
           topText="DEUS"
-          mainText="Ξ 0.0210 / $26.043"
+          mainText="Ξ0.0210/$26.043"
           cSupply="4,435,539"
           mCap="$115,514,742"
           vLocked="$59,532,525"
@@ -31,7 +31,7 @@ export default function Staking() {
         />   
         <ColorBox
           topText="DEA"
-          mainText="Ξ 0.5672 / $737.360"
+          mainText="Ξ0.5672/$737.360"
           cSupply="102,880 / 166,670"
           mCap="$75,859,596"
           vLocked="$54,960,277 - 72.54%"
@@ -39,7 +39,7 @@ export default function Staking() {
         />
         <ColorBox
           topText="DEUS"
-          mainText="Ξ 0.0210 / $26.043 "
+          mainText="Ξ0.0210/$26.043 "
           cSupply="102,880 / 166,670"
           mCap="$75,859,596"
           vLocked="$54,960,277 - 72.54%"

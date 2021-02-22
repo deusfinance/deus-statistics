@@ -35,7 +35,7 @@ export default function Staking() {
         />
         <ColorBox
           topText="DEUS"
-          mainText="$26,45M / Ξ 2210"
+          mainText="$26,45M/Ξ2210"
           bottomText
           className={styles.thirdBox}
         />

@@ -1,6 +1,7 @@
 import React from 'react';
 import cx from 'classnames';
 
+import { formatCol } from 'utils/formatUI';
 import styles from './Table.module.scss';
 
 export default function Table({ headers, sizes, rows }) {
@@ -28,7 +29,7 @@ export default function Table({ headers, sizes, rows }) {
                           <div>{col[0]}</div>
                           <div className={styles.smallText}>{col[1]}</div>
                         </>
-                      ) : col
+                      ) : formatCol(col)
                     }
                   </div>
                 ))

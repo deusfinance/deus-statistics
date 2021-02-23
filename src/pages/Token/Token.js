@@ -4,7 +4,7 @@ import Tabs from 'components/Tabs/Tabs';
 import styles from './Token.module.scss';
 import Token from './components/TokenContent/TokenContent';
 
-const tabs = ['STAKING', 'VAULTS', 'TOKEN', 'dDEX'];
+const tabs = ['STAKING', 'VAULTS', 'TOKEN', 'MARKETS'];
 export default function Statistics() {
   const CurrentPage = Token; // pages[activeTab];
   return (

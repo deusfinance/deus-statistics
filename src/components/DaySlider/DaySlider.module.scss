@@ -1,5 +1,6 @@
 .slider {
   width: 100%;
+  filter: blur(5px);
   :global(.ant-slider-mark-text) {
     display: none;
   }

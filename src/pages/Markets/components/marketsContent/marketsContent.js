@@ -4,7 +4,7 @@ import Select from 'components/Select/Select';
 import ColorBox from 'components/ColorBox/ColorBox';
 import Table from 'components/Table/Table';
 import DaySlider from 'components/DaySlider/DaySlider';
-import styles from './dDexContent.module.scss';
+import styles from './marketsContent.module.scss';
 
 const rows = [
   [ 'ALL', '11.7 M', <span style={{ color: '#00D16C'}}>'+35.34%'</span>, '$10,535,432.34', 'Ξ343.3452' ],

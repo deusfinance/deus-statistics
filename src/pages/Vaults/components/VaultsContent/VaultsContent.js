@@ -22,7 +22,7 @@ export default function Staking() {
       <div className={styles.topBoxes}>
         <InfoBox topText="Total Value Locked" bottomText="7,478.938 ETH / $12,252,008.67" className={styles.eachBox} />
         <InfoBox topText="Your Value Locked" bottomText="7,478.938 ETH / $12,252,008.67" className={styles.eachBox} />
-        <InfoBox topText="Prices" bottomText="$5.02 DEUS – $234.42 DEA – $1.23 DEOX" className={styles.eachBox} />
+        <InfoBox topText="Prices" bottomText="$5.02 DEUS – $234.42 DEA" className={styles.eachBox} />
       </div>
       <Select left='TOTAL' right='WALLET' activeItem={selectActiveItem} setActiveItem={setSelectActiveItem} />
       <div className={styles.table}>

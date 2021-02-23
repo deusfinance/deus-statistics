@@ -4,9 +4,9 @@ import cx from 'classnames';
 import styles from './ColorBox.module.scss';
 import { formatCol, formatSecondText } from 'utils/formatUI';
 
-export default function ColorBox({ topText, mainText, cSupply, mCap, vLocked, syncs, synchronizers, bottomText, className }) {
+export default function ColorBox({ topText, mainText, cSupply, mCap, vLocked, syncs, synchronizers, bottomText, className, blur }) {
   return (
-    <div className={cx(styles.box, className)}>
+    <div className={cx(styles.box, className)} style={blur && { filter:'blur(5px)' }}>
       <div className={styles.topText}>{topText}</div>
       <div className={styles.mainText}>{formatCol(mainText)}</div>
       <div className={styles.bottom}>

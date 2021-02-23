@@ -11,7 +11,6 @@ import ColorBox from 'components/ColorBox/ColorBox';
 const rows = [
   [ 'DEUS', '324,424.23', '324,424.23', '324,424.23', '424.34', '324,424.23', '23,324,424.23', <span style={{ color: '#00D16C'}}>+35.34%</span> ],
   [ 'DEA', '324,424.23', '324,424.23', '324,424.23', '424.34', '324,424.23', '23,324,424.23', <span style={{ color: '#D40000'}}>-0.12%</span> ],
-  [ 'DEOX', '324,424.23', '324,424.23', '324,424.23', '424.34', '324,424.23', '23,324,424.23', <span style={{ color: '#D40000'}}>-0.12%</span> ],
 ]
 
 export default function Staking() {
@@ -44,6 +43,7 @@ export default function Staking() {
           mCap="$75,859,596"
           vLocked="$54,960,277 - 72.54%"
           className={styles.thirdBox}
+          blur
         />
       </div>
       <div className={styles.connectedWallet}>Connected Wallet</div>

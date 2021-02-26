@@ -20,6 +20,10 @@
       width: calc(32% - 60px);
       background: linear-gradient(90deg, rgba(109, 106, 253, 0.75) 0%, rgba(175, 229, 255, 0.75) 100%), #FFFFFF;
     }
+    .colorNoneBox {
+      padding: 23px 30px;
+      background: none;
+    }
   }
   .connectedWallet {
     font-family: Edu Monument Grotesk Semi-Mono;

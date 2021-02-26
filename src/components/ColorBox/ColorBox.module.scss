@@ -6,7 +6,10 @@
   padding: 23px 30px;
   border-radius: 6px;
   border: 1px solid white;
-  height: 230px;
+  aspect-ratio: 1.8;
+  @media screen and (max-width: 1440px) {
+    aspect-ratio: 1.5;
+  }
   .topText {
     font-family: Edu Monument Grotesk Semi-Mono;
     font-weight: 400;

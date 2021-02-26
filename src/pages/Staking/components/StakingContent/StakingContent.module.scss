@@ -16,7 +16,19 @@
       flex-direction: row;
       align-items: center;
       .usdText {
-        width: 200px;
+        width: '100%';
+      }
+    }
+    .apyContainer {
+      margin-left: 12px;
+      margin-top: 18px;
+      .apyText {
+        font-family: Edu Monument Grotesk Mono;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 12px;
+        line-height: 17px;
+        color: #FFFFFF;
       }
     }
   }

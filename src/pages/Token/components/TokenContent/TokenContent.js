@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import cx from 'classnames';
 
 import Select from 'components/Select/Select';
 import ThreeSelect from 'components/ThreeSelect/ThreeSelect';
@@ -36,15 +37,7 @@ export default function Staking() {
           vLocked="$54,960,277 - 72.54%"
           className={styles.secondBox}
         />
-        <ColorBox
-          topText="DEUS"
-          mainText="Ξ0.0210/$26.043 "
-          cSupply="102,880 / 166,670"
-          mCap="$75,859,596"
-          vLocked="$54,960,277 - 72.54%"
-          className={styles.thirdBox}
-          blur
-        />
+        <div className={cx(styles.thirdBox, styles.colorNoneBox)} />
       </div>
       <div className={styles.connectedWallet}>Connected Wallet</div>
       <div className={styles.infoBoxes}>

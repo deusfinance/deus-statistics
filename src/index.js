@@ -1,18 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Web3ReactProvider } from '@web3-react/core'
+import { ApolloProvider } from 'react-apollo'
+import { ApolloProvider as ApolloHooksProvider } from '@apollo/react-hooks'
 
 import './index.scss';
 import Routes from 'routes';
 import { getLibrary } from './utils/utils';
+import { client } from './api/client'
 
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Web3ReactProvider getLibrary={getLibrary}>
-      <Routes />
-    </Web3ReactProvider>
+    <ApolloProvider client={client}>
+      <ApolloHooksProvider client={client}>
+        <Web3ReactProvider getLibrary={getLibrary}>
+          <Routes />
+        </Web3ReactProvider>
+      </ApolloHooksProvider>
+    </ApolloProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

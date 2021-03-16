@@ -11,6 +11,14 @@ import Table from 'components/Table/Table';
 import BlurBar from 'components/BlurBar/BlurBar';
 import DaySlider from 'components/DaySlider/DaySlider';
 import styles from './StakingContent.module.scss';
+import IconButton from 'components/IconButton/IconButton';
+
+const titles = [
+  { title: 'Native Balancer Pool', address: '0x136193485A8f4870f31B864429a72A9037a1fCE2', second: 'BPT' },
+  { title: 'sDEA', address: '0xFd82cdf5A0212A5C838D7A69f43Ceb4A624ad7eF', second: 'Sealed DEA' },
+  { title: 'sDEUS', address: '0x417d16BF319B7F413E950e131D0335004536A37E', second: 'Sealed DEUS' },
+  { title: 'Time', address: '0x982C54303622347fB3724Ee757cCF6ACc553A5f8', second: 'Time Token' },
+]
 
 const rows = [
   [ ['Native Balancer Pool', 'BPT'], '-300%', '1,239.8493', '$10,535,432.34', 'Ξ343.3452', <BlurBar /> ],
@@ -45,6 +53,16 @@ export default function Staking() {
       rows[2][3] = '$' + formatUsd(new BigNumber(sDeusLocked).times(deusPrice).div(new BigNumber(10).pow(18)).toFixed(4));
       rows[2][4] = 'Ξ' + formatUsd(new BigNumber(sDeusLocked).times(deusPrice).div(new BigNumber(10).pow(18)).div(ethPrice).toFixed(4));
       rows[3][2] = new BigNumber(totalValueLocked).div(new BigNumber(10).pow(18)).toFixed(4);
+      for (let i=0; i<4; i++) {
+        rows[i][0] = [
+          <>
+            {titles[i].title}
+            <IconButton type='copy' address={titles[i].address} />
+            <IconButton type='etherscan' address={titles[i].address} />
+          </>,
+          titles[i].second
+        ]
+      }
     }
     return rows;
   }

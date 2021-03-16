@@ -1,0 +1,12 @@
+:global(.rc-tooltip-inner) {
+  background-color: #fff;
+  width: 90px;
+  color: black;
+  min-height: 20px;
+  border-radius: 3px;
+  padding-left: 15px;
+  text-align: center;
+}
+:global(.rc-tooltip-placement-top .rc-tooltip-arrow) {
+  border-top-color: #fff;
+}

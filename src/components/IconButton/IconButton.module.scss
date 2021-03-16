@@ -1,0 +1,23 @@
+.wrapper {
+  cursor: 'not-allowed'
+}
+.button {
+  background: transparent;
+  margin-left: 7px;
+  border: none;
+  opacity: 0.2;
+  &:hover {
+    opacity: 1;
+    cursor: pointer;
+  }
+  &:active {
+    opacity: 1;
+  }
+  &:focus {
+    opacity: 1;
+    outline: none;
+  }
+}
+.icon {
+  height: 17px;
+}

@@ -5,7 +5,6 @@ import Select from 'components/Select/Select';
 import ThreeSelect from 'components/ThreeSelect/ThreeSelect';
 import InfoBox from 'components/InfoBox/InfoBox';
 import Table from 'components/Table/Table';
-import DaySlider from 'components/DaySlider/DaySlider';
 import styles from './TokenContent.module.scss';
 import ColorBox from 'components/ColorBox/ColorBox';
 

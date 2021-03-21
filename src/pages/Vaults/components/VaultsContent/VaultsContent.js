@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import Select from 'components/Select/Select';
 import InfoBox from 'components/InfoBox/InfoBox';
 import Table from 'components/Table/Table';
-import DaySlider from 'components/DaySlider/DaySlider';
 import styles from './VaultsContent.module.scss';
 
 const rows = [

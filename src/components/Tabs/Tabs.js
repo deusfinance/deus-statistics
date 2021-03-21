@@ -2,7 +2,6 @@ import React from 'react';
 import cx from 'classnames';
 import { NavLink } from 'react-router-dom';
 
-import Button from 'components/Button/Button';
 import styles from './Tabs.module.scss';
 
 export default function Tabs({ tabs, activeTab, setActiveTab, children }) {

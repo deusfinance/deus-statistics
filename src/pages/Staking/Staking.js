@@ -10,7 +10,7 @@ export default function Statistics() {
   const CurrentPage = Staking; // pages[activeTab];
   return (
     <div className={styles.main}>
-      <img src="background.png" className={styles.background} />
+      <img src="background.png" className={styles.background} alt="back" />
       <span className={styles.title}>STATISTICS</span>
       <div className={styles.tabs}>
         <Tabs tabs={tabs} activeTab={'STAKING'}>

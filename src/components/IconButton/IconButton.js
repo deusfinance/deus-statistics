@@ -13,7 +13,7 @@ export default function IconButton({type, address}) {
     <Tooltip overlay={<span>copy address</span>} placement='top'>
       <span className={styles.wrapper}>
         <Button className={styles.button} onClick={() => handleClick()}>
-          <img src={type === 'copy' ? '/img/copy.png' : 'etherscan' ? '/img/etherscan.png' : null} className={styles.icon} />
+          <img src={type === 'copy' ? '/img/copy.png' : 'etherscan' ? '/img/etherscan.png' : null} className={styles.icon} alt="icon" />
         </Button>
       </span>
     </Tooltip>

@@ -10,7 +10,7 @@ export default function Table({ headers, sizes, rows }) {
       <div className={styles.headers}>
         {
           headers.map((header, index) => (
-            <div key={header} className={styles.header} style={{ width: `${sizes[index]}%` }}>
+            <div key={index} className={styles.header} style={{ width: `${sizes[index]}%` }}>
               {header}
             </div>
           ))
@@ -19,10 +19,10 @@ export default function Table({ headers, sizes, rows }) {
       <div className={styles.rows}>
         {
           rows.map((row, rowIndex) => (
-            <div className={cx(styles.row, rowIndex === rows.length - 1 && styles.noBottomBorder)} key={row}>
+            <div className={cx(styles.row, rowIndex === rows.length - 1 && styles.noBottomBorder)} key={rowIndex}>
               {
                 row.map((col, colIndex) => (
-                  <div className={styles.col} key={col} style={{ width: `${sizes[colIndex]}%` }}>
+                  <div className={styles.col} key={colIndex} style={{ width: `${sizes[colIndex]}%` }}>
                     {
                       Array.isArray(col) ? (
                         <>

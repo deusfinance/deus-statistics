@@ -3,21 +3,22 @@ import { useQuery } from '@apollo/react-hooks'
 import BigNumber from 'bignumber.js'
 
 import { GET_ALL_STAKING_SUMMARY } from 'api/query';
+import useLocked from 'api/locked';
 import usePrice from 'api/price';
+import useStaticApi from 'api/static-api';
 import { formatUsd } from 'utils/formatNumber';
 import Select from 'components/Select/Select';
 import InfoBox from 'components/InfoBox/InfoBox';
 import Table from 'components/Table/Table';
 import BlurBar from 'components/BlurBar/BlurBar';
-import DaySlider from 'components/DaySlider/DaySlider';
 import styles from './StakingContent.module.scss';
 import IconButton from 'components/IconButton/IconButton';
 
 const titles = [
-  { title: 'Native Balancer Pool', address: '0x136193485A8f4870f31B864429a72A9037a1fCE2', second: 'BPT' },
-  { title: 'sDEA', address: '0xFd82cdf5A0212A5C838D7A69f43Ceb4A624ad7eF', second: 'Sealed DEA' },
-  { title: 'sDEUS', address: '0x417d16BF319B7F413E950e131D0335004536A37E', second: 'Sealed DEUS' },
-  { title: 'Time', address: '0x982C54303622347fB3724Ee757cCF6ACc553A5f8', second: 'Time Token' },
+  { title: 'Native Balancer Pool', address: '0x136193485A8f4870f31B864429a72A9037a1fCE2', second: 'BPT', alias: 'bpt_native' },
+  { title: 'sDEA', address: '0xFd82cdf5A0212A5C838D7A69f43Ceb4A624ad7eF', second: 'Sealed DEA', alias: 'dea' },
+  { title: 'sDEUS', address: '0x417d16BF319B7F413E950e131D0335004536A37E', second: 'Sealed DEUS', alias: 'deus' },
+  { title: 'Time', address: '0x982C54303622347fB3724Ee757cCF6ACc553A5f8', second: 'Time Token', alias: 'timetoken' },
 ]
 
 const rows = [
@@ -29,7 +30,9 @@ const rows = [
 
 export default function Staking() {
   const [selectActiveItem, setSelectActiveItem] = useState('TOTAL');
-  const { loading, error, data: stakingData } = useQuery(GET_ALL_STAKING_SUMMARY)
+  const { data: stakingData } = useQuery(GET_ALL_STAKING_SUMMARY)
+  const locked = useLocked();
+  const staticApi = useStaticApi();
   const deaPrice = usePrice('dea', 'usd');
   const deusPrice = usePrice('deus-finance', 'usd');
   const ethPrice = usePrice('ethereum', 'usd');
@@ -41,7 +44,7 @@ export default function Staking() {
       const balancerLocked = stakingData.stakingSummaryEntity.balancerLocked;
       const sDeaLocked = stakingData.stakingSummaryEntity.sDeaLocked;
       const sDeusLocked = stakingData.stakingSummaryEntity.sDeusLocked;
-      const timeLocked = stakingData.stakingSummaryEntity.timeLocked;
+      // const timeLocked = stakingData.stakingSummaryEntity.timeLocked;
       const totalValueLocked = stakingData.stakingSummaryEntity.totalValueLocked;
       rows[0][2] = new BigNumber(balancerLocked).div(new BigNumber(10).pow(18)).toFixed(4);
       rows[0][3] = '$' + formatUsd(new BigNumber(balancerLocked).times(bptPrice).div(new BigNumber(10).pow(18)).toFixed(4));
@@ -62,6 +65,9 @@ export default function Staking() {
           </>,
           titles[i].second
         ]
+        
+        if(staticApi && staticApi.apy)
+          rows[i][1] = staticApi.apy[titles[i].alias] + '%'
       }
     }
     return rows;
@@ -70,42 +76,76 @@ export default function Staking() {
   const getTotalValueEth = () => {
     let total = new BigNumber(0);
     
-    if(stakingData) {
-      if (deaPrice && stakingData.stakingSummaryEntity.sDeaLocked) {
-        total = total.plus(new BigNumber(stakingData.stakingSummaryEntity.sDeaLocked).times(new BigNumber(deaPrice)))
+    if(locked) {
+      if(locked.stakingLockedValue) {
+        total = total.plus(new BigNumber(locked.stakingLockedValue))
       }
-      if (deusPrice && stakingData.stakingSummaryEntity.sDeusLocked) {
-        total = total.plus(new BigNumber(stakingData.stakingSummaryEntity.sDeusLocked).times(new BigNumber(deusPrice)))
+      if(locked.vaultLockedValue) {
+        total = total.plus(new BigNumber(locked.vaultLockedValue))
       }
-      if (bptPrice && stakingData.stakingSummaryEntity.balancerLocked) {
-        total = total.plus(new BigNumber(stakingData.stakingSummaryEntity.balancerLocked).times(new BigNumber(bptPrice)))
+      if(locked.balancerLockedValue) {
+        total = total.plus(new BigNumber(locked.balancerLockedValue))
+      }
+      if(locked.uniswapLockedValue) {
+        total = total.plus(new BigNumber(locked.uniswapLockedValue))
+      }
+      if(locked.etherLockedInMarketMaker) {
+        total = total.plus(new BigNumber(locked.etherLockedInMarketMaker))
       }
     }
 
-    return formatUsd(total.div(new BigNumber(10).pow(18)).div(new BigNumber(ethPrice)).toFixed(3));
+    return formatUsd(total.div(new BigNumber(ethPrice)).toFixed(3));
   }
 
   const getTotalValueUsd = () => {
     let total = new BigNumber(0);
-    if(stakingData) {
-      if (deaPrice && stakingData.stakingSummaryEntity.sDeaLocked) {
-        total = total.plus(new BigNumber(stakingData.stakingSummaryEntity.sDeaLocked).times(new BigNumber(deaPrice)))
+    
+    if(locked) {
+      if(locked.stakingLockedValue) {
+        total = total.plus(new BigNumber(locked.stakingLockedValue))
       }
-      if (deusPrice && stakingData.stakingSummaryEntity.sDeusLocked) {
-        total = total.plus(new BigNumber(stakingData.stakingSummaryEntity.sDeusLocked).times(new BigNumber(deusPrice)))
+      if(locked.vaultLockedValue) {
+        total = total.plus(new BigNumber(locked.vaultLockedValue))
       }
-      if (bptPrice && stakingData.stakingSummaryEntity.balancerLocked) {
-        total = total.plus(new BigNumber(stakingData.stakingSummaryEntity.balancerLocked).times(new BigNumber(bptPrice)))
+      if(locked.balancerLockedValue) {
+        total = total.plus(new BigNumber(locked.balancerLockedValue))
+      }
+      if(locked.uniswapLockedValue) {
+        total = total.plus(new BigNumber(locked.uniswapLockedValue))
+      }
+      if(locked.etherLockedInMarketMaker) {
+        total = total.plus(new BigNumber(locked.etherLockedInMarketMaker))
       }
     }
-    return formatUsd(total.div(new BigNumber(10).pow(18)).toFixed(2));
+    
+    return formatUsd(total.toFixed(2));
+  }
+
+  const getTotalStakedEth = () => {
+    let staked = new BigNumber(0);
+    
+    if(locked && locked.stakingLockedValue) {
+      staked = new BigNumber(locked.stakingLockedValue);
+    }
+
+    return formatUsd(staked.div(new BigNumber(ethPrice)).toFixed(3));
+  }
+
+  const getTotalStakedUsd = () => {
+    let staked = new BigNumber(0);
+    
+    if(locked && locked.stakingLockedValue) {
+      staked = new BigNumber(locked.stakingLockedValue);
+    }
+    
+    return formatUsd(staked.toFixed(2));
   }
 
   return (
     <div className={styles.main}>
       <div className={styles.topBoxes}>
         <InfoBox topText="Total Value Locked" bottomText={`${getTotalValueEth()} ETH / $${getTotalValueUsd()}`} className={styles.eachBox} />
-        <InfoBox topText="Your Value Locked" bottomText="7,478.938 ETH / $12,252,008.67" className={styles.eachBox} />
+        <InfoBox topText="Total Staked Amount" bottomText={`${getTotalStakedEth()} ETH / $${getTotalStakedUsd()}`} className={styles.eachBox} />
         <InfoBox topText="Prices" bottomText={`$${deusPrice} DEUS – $${deaPrice} DEA`} className={styles.eachBox} />
       </div>
       <Select left='TOTAL' right='WALLET' activeItem={selectActiveItem} setActiveItem={setSelectActiveItem} />

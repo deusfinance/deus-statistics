@@ -4,7 +4,7 @@ import { ApolloClient } from "apollo-client"
 
 export const client = new ApolloClient({
   link: new HttpLink({
-    uri: "https://api.thegraph.com/subgraphs/name/shing-ho/deus-finance-subgraph"
+    uri: "https://api.thegraph.com/subgraphs/name/droplet361/deus-finance-subgraph"
   }),
   cache: new InMemoryCache(),
 });

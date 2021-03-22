@@ -3,7 +3,7 @@ import { useQuery } from '@apollo/react-hooks'
 import BigNumber from 'bignumber.js'
 import { useWeb3React } from '@web3-react/core';
 
-import { GET_ALL_STAKING_SUMMARY, GET_USER_STAKING_SUMMARY } from 'api/query';
+import { GET_STAKING_SUMMARY } from 'api/query';
 import useLocked from 'api/locked';
 import usePrice from 'api/price';
 import useStaticApi from 'api/static-api';
@@ -36,7 +36,7 @@ export default function Staking() {
   useEffect(() => {
     async function fetchData() {
       if(account) {
-        const useQueryData = await client.query({query: GET_USER_STAKING_SUMMARY, variables: {id: account}})
+        const useQueryData = await client.query({query: GET_STAKING_SUMMARY, variables: {id: account}})
         setUserStaking(useQueryData?.data)
       } else {
         setUserStaking({stakingSummaryEntity: null})
@@ -45,7 +45,7 @@ export default function Staking() {
     fetchData()
   }, [account])
   const [selectActiveItem, setSelectActiveItem] = useState('TOTAL');
-  const { data: totalStaking } = useQuery(GET_ALL_STAKING_SUMMARY)
+  const { data: totalStaking } = useQuery(GET_STAKING_SUMMARY, {variables: {id: '0'}})
   const locked = useLocked();
   const staticApi = useStaticApi();
   const deaPrice = usePrice('dea', 'usd');

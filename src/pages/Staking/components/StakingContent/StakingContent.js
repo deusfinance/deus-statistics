@@ -17,10 +17,10 @@ import IconButton from 'components/IconButton/IconButton';
 import { client } from 'api/client'
 
 const titles = [
-  { title: 'Native Balancer Pool', address: '0x136193485A8f4870f31B864429a72A9037a1fCE2', second: 'BPT', alias: 'bpt_native' },
-  { title: 'sDEA', address: '0xFd82cdf5A0212A5C838D7A69f43Ceb4A624ad7eF', second: 'Sealed DEA', alias: 'dea' },
-  { title: 'sDEUS', address: '0x417d16BF319B7F413E950e131D0335004536A37E', second: 'Sealed DEUS', alias: 'deus' },
-  { title: 'Time', address: '0x982C54303622347fB3724Ee757cCF6ACc553A5f8', second: 'Time Token', alias: 'timetoken' },
+  { title: 'Native Balancer Pool', address: '0x136193485A8f4870f31B864429a72A9037a1fCE2', second: 'BPT', alias: 'bpt_native', ticker: 'BPT' },
+  { title: 'sDEA', address: '0xFd82cdf5A0212A5C838D7A69f43Ceb4A624ad7eF', second: 'Sealed DEA', alias: 'dea', ticker: 'DEA' },
+  { title: 'sDEUS', address: '0x417d16BF319B7F413E950e131D0335004536A37E', second: 'Sealed DEUS', alias: 'deus', ticker: 'DEUS' },
+  { title: 'Time', address: '0x982C54303622347fB3724Ee757cCF6ACc553A5f8', second: 'Time Token', alias: 'timetoken', ticker: 'TIME' },
 ]
 
 const rows = [
@@ -84,6 +84,8 @@ export default function Staking() {
       
       if(staticApi && staticApi.apy)
         rows[i][1] = staticApi.apy[titles[i].alias] + '%'
+
+      rows[i][2] = rows[i][2] + ' ' + titles[i].ticker
     }
     return rows;
   }

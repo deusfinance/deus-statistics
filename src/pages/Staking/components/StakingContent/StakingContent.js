@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useQuery } from '@apollo/react-hooks'
 import BigNumber from 'bignumber.js'
+import { useWeb3React } from '@web3-react/core';
 
-import { GET_ALL_STAKING_SUMMARY } from 'api/query';
+import { GET_ALL_STAKING_SUMMARY, GET_USER_STAKING_SUMMARY } from 'api/query';
 import useLocked from 'api/locked';
 import usePrice from 'api/price';
 import useStaticApi from 'api/static-api';
@@ -13,6 +14,7 @@ import Table from 'components/Table/Table';
 import BlurBar from 'components/BlurBar/BlurBar';
 import styles from './StakingContent.module.scss';
 import IconButton from 'components/IconButton/IconButton';
+import { client } from 'api/client'
 
 const titles = [
   { title: 'Native Balancer Pool', address: '0x136193485A8f4870f31B864429a72A9037a1fCE2', second: 'BPT', alias: 'bpt_native' },
@@ -29,46 +31,59 @@ const rows = [
 ]
 
 export default function Staking() {
+  const { account } = useWeb3React()
+  const [userStaking, setUserStaking] = useState({stakingSummaryEntity: null})
+  useEffect(() => {
+    async function fetchData() {
+      if(account) {
+        const useQueryData = await client.query({query: GET_USER_STAKING_SUMMARY, variables: {id: account}})
+        setUserStaking(useQueryData?.data)
+      } else {
+        setUserStaking({stakingSummaryEntity: null})
+      }
+    }
+    fetchData()
+  }, [account])
   const [selectActiveItem, setSelectActiveItem] = useState('TOTAL');
-  const { data: stakingData } = useQuery(GET_ALL_STAKING_SUMMARY)
+  const { data: totalStaking } = useQuery(GET_ALL_STAKING_SUMMARY)
   const locked = useLocked();
   const staticApi = useStaticApi();
   const deaPrice = usePrice('dea', 'usd');
   const deusPrice = usePrice('deus-finance', 'usd');
   const ethPrice = usePrice('ethereum', 'usd');
   const bptPrice = usePrice('bpt', 'usd');
-  // let balancerLocked = new BigNumber(0), sDeaLocked = new BigNumber(0), sDeusLocked = new BigNumber(0), timeLocked = new BigNumber(0), totalValueLocked = new BigNumber(0);
 
   const getRows = () => {
-    if(stakingData) {
-      const balancerLocked = stakingData.stakingSummaryEntity.balancerLocked;
-      const sDeaLocked = stakingData.stakingSummaryEntity.sDeaLocked;
-      const sDeusLocked = stakingData.stakingSummaryEntity.sDeusLocked;
-      // const timeLocked = stakingData.stakingSummaryEntity.timeLocked;
-      const totalValueLocked = stakingData.stakingSummaryEntity.totalValueLocked;
-      rows[0][2] = new BigNumber(balancerLocked).div(new BigNumber(10).pow(18)).toFixed(4);
-      rows[0][3] = '$' + formatUsd(new BigNumber(balancerLocked).times(bptPrice).div(new BigNumber(10).pow(18)).toFixed(4));
-      rows[0][4] = 'Ξ' + formatUsd(new BigNumber(balancerLocked).times(bptPrice).div(new BigNumber(10).pow(18)).div(ethPrice).toFixed(4));
-      rows[1][2] = new BigNumber(sDeaLocked).div(new BigNumber(10).pow(18)).toFixed(4);
-      rows[1][3] = '$' + formatUsd(new BigNumber(sDeaLocked).times(deaPrice).div(new BigNumber(10).pow(18)).toFixed(4));
-      rows[1][4] = 'Ξ' + formatUsd(new BigNumber(sDeaLocked).times(deaPrice).div(new BigNumber(10).pow(18)).div(ethPrice).toFixed(4));
-      rows[2][2] = new BigNumber(sDeusLocked).div(new BigNumber(10).pow(18)).toFixed(4);
-      rows[2][3] = '$' + formatUsd(new BigNumber(sDeusLocked).times(deusPrice).div(new BigNumber(10).pow(18)).toFixed(4));
-      rows[2][4] = 'Ξ' + formatUsd(new BigNumber(sDeusLocked).times(deusPrice).div(new BigNumber(10).pow(18)).div(ethPrice).toFixed(4));
-      rows[3][2] = new BigNumber(totalValueLocked).div(new BigNumber(10).pow(18)).toFixed(4);
-      for (let i=0; i<4; i++) {
-        rows[i][0] = [
-          <>
-            {titles[i].title}
-            <IconButton type='copy' address={titles[i].address} />
-            <IconButton type='etherscan' address={titles[i].address} />
-          </>,
-          titles[i].second
-        ]
-        
-        if(staticApi && staticApi.apy)
-          rows[i][1] = staticApi.apy[titles[i].alias] + '%'
-      }
+    const stakingData = selectActiveItem === 'TOTAL' ? totalStaking : userStaking
+    let balancerLocked = 0, sDeaLocked = 0, sDeusLocked = 0, timeLocked = 0
+    if(stakingData && stakingData.stakingSummaryEntity) {
+      balancerLocked = stakingData.stakingSummaryEntity.balancerLocked;
+      sDeaLocked = stakingData.stakingSummaryEntity.sDeaLocked;
+      sDeusLocked = stakingData.stakingSummaryEntity.sDeusLocked;
+      timeLocked = stakingData.stakingSummaryEntity.timeLocked;
+    }
+    rows[0][2] = new BigNumber(balancerLocked).div(new BigNumber(10).pow(18)).toFixed(4);
+    rows[0][3] = '$' + formatUsd(new BigNumber(balancerLocked).times(bptPrice).div(new BigNumber(10).pow(18)).toFixed(4));
+    rows[0][4] = 'Ξ' + formatUsd(new BigNumber(balancerLocked).times(bptPrice).div(new BigNumber(10).pow(18)).div(ethPrice).toFixed(4));
+    rows[1][2] = new BigNumber(sDeaLocked).div(new BigNumber(10).pow(18)).toFixed(4);
+    rows[1][3] = '$' + formatUsd(new BigNumber(sDeaLocked).times(deaPrice).div(new BigNumber(10).pow(18)).toFixed(4));
+    rows[1][4] = 'Ξ' + formatUsd(new BigNumber(sDeaLocked).times(deaPrice).div(new BigNumber(10).pow(18)).div(ethPrice).toFixed(4));
+    rows[2][2] = new BigNumber(sDeusLocked).div(new BigNumber(10).pow(18)).toFixed(4);
+    rows[2][3] = '$' + formatUsd(new BigNumber(sDeusLocked).times(deusPrice).div(new BigNumber(10).pow(18)).toFixed(4));
+    rows[2][4] = 'Ξ' + formatUsd(new BigNumber(sDeusLocked).times(deusPrice).div(new BigNumber(10).pow(18)).div(ethPrice).toFixed(4));
+    rows[3][2] = new BigNumber(timeLocked).div(new BigNumber(10).pow(18)).toFixed(4);
+    for (let i=0; i<4; i++) {
+      rows[i][0] = [
+        <>
+          {titles[i].title}
+          <IconButton type='copy' address={titles[i].address} />
+          <IconButton type='etherscan' address={titles[i].address} />
+        </>,
+        titles[i].second
+      ]
+      
+      if(staticApi && staticApi.apy)
+        rows[i][1] = staticApi.apy[titles[i].alias] + '%'
     }
     return rows;
   }

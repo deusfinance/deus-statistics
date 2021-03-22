@@ -12,3 +12,15 @@ export const GET_ALL_STAKING_SUMMARY = gql`
     }
   }
 `
+export const GET_USER_STAKING_SUMMARY = gql`
+  query summary($id: String) {
+    stakingSummaryEntity(id: $id) {
+      id
+      totalValueLocked
+      balancerLocked
+      sDeaLocked
+      sDeusLocked
+      timeLocked
+    }
+  }
+`

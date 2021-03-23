@@ -36,8 +36,11 @@ export default function Staking() {
   useEffect(() => {
     async function fetchData() {
       if(account) {
-        const useQueryData = await client.query({query: GET_STAKING_SUMMARY, variables: {id: account}})
-        setUserStaking(useQueryData?.data)
+        try {
+          const useQueryData = await client.query({query: GET_STAKING_SUMMARY, variables: {id: account.toLowerCase()}})
+          setUserStaking(useQueryData?.data)
+        } catch(e) {
+        }
       } else {
         setUserStaking({stakingSummaryEntity: null})
       }
@@ -72,6 +75,18 @@ export default function Staking() {
     rows[2][3] = '$' + formatUsd(new BigNumber(sDeusLocked).times(deusPrice).div(new BigNumber(10).pow(18)).toFixed(4));
     rows[2][4] = 'Ξ' + formatUsd(new BigNumber(sDeusLocked).times(deusPrice).div(new BigNumber(10).pow(18)).div(ethPrice).toFixed(4));
     rows[3][2] = new BigNumber(timeLocked).div(new BigNumber(10).pow(18)).toFixed(4);
+    if(selectActiveItem === 'TOTAL') {
+      rows[3][3] = {
+        value: 'Can you measure the true value of time?',
+        colspan: 2
+      }
+      rows[3][4] = {
+        colspan: -1
+      }
+    } else {
+      rows[3][3] = '$0.00';
+      rows[3][4] = 'Ξ0.00';
+    }
     for (let i=0; i<4; i++) {
       rows[i][0] = [
         <>

@@ -22,16 +22,24 @@ export default function Table({ headers, sizes, rows }) {
             <div className={cx(styles.row, rowIndex === rows.length - 1 && styles.noBottomBorder)} key={rowIndex}>
               {
                 row.map((col, colIndex) => (
-                  <div className={styles.col} key={colIndex} style={{ width: `${sizes[colIndex]}%` }}>
-                    {
-                      Array.isArray(col) ? (
-                        <>
-                          <div>{col[0]}</div>
-                          <div className={styles.smallText}>{col[1]}</div>
-                        </>
-                      ) : formatCol(col)
-                    }
-                  </div>
+                  typeof col === 'object' && col.colspan ? (
+                    col.colspan === 2 ? (
+                      <div className={styles.col} key={colIndex} style={{ width: `${sizes[colIndex] + sizes[colIndex + 1]}%` }}>
+                        {formatCol(col.value)}
+                      </div>  
+                    ) : null
+                  ) : (
+                    <div className={styles.col} key={colIndex} style={{ width: `${sizes[colIndex]}%` }}>
+                      {
+                        Array.isArray(col) ? (
+                          <>
+                            <div>{col[0]}</div>
+                            <div className={styles.smallText}>{col[1]}</div>
+                          </>
+                        ) : formatCol(col)
+                      }
+                    </div>
+                  )
                 ))
               }
             </div>

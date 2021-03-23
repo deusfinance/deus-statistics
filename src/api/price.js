@@ -11,6 +11,12 @@ function usePrice(token, currency) {
           .then(resp => {
             setPrice(resp['bpt_price'] || 0);
           })
+      } else if (token === 'dea' || token === 'deus') {
+        fetch(`https://app.deus.finance/price.json`, {method: 'GET'})
+          .then(data => data.json())
+          .then(resp => {
+            setPrice(resp[token] || 0);
+          })
       } else {
         fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${token}&vs_currencies=${currency}`, {method: 'GET'})
           .then(data => data.json())

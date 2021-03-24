@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useQuery } from '@apollo/react-hooks'
 import BigNumber from 'bignumber.js'
 import { useWeb3React } from '@web3-react/core';
+import { Button } from 'antd';
 
 import { GET_STAKING_SUMMARY } from 'api/query';
 import useLocked from 'api/locked';
@@ -15,6 +16,7 @@ import BlurBar from 'components/BlurBar/BlurBar';
 import styles from './StakingContent.module.scss';
 import IconButton from 'components/IconButton/IconButton';
 import { client } from 'api/client'
+import { SwapService } from 'services/SwapService';
 
 const titles = [
   { title: 'Native Balancer Pool', address: '0x136193485A8f4870f31B864429a72A9037a1fCE2', second: 'BPT', alias: 'bpt_native', ticker: 'BPT' },
@@ -31,22 +33,33 @@ const rows = [
 ]
 
 export default function Staking() {
-  const { account } = useWeb3React()
+  const { account, chainId } = useWeb3React()
   const [userStaking, setUserStaking] = useState({stakingSummaryEntity: null})
+  const [earned, setEarned] = useState([0,0,0,0])
   useEffect(() => {
     async function fetchData() {
-      if(account) {
+      if(account && chainId) {
         try {
+          const swapServie = new SwapService(account, chainId)
+          let newEarned = [0, 0, 0, 0]
+          for (let i = 0; i < 4; i ++) {
+            try {
+              swapServie.StakingContract.options.address = titles[i].address
+              newEarned[i] = await swapServie.StakingContract.methods.pendingReward(account.toLowerCase()).call()
+            } catch(e) { }
+          }
+          setEarned(newEarned)
           const useQueryData = await client.query({query: GET_STAKING_SUMMARY, variables: {id: account.toLowerCase()}})
           setUserStaking(useQueryData?.data)
         } catch(e) {
+          console.error(e)
         }
       } else {
         setUserStaking({stakingSummaryEntity: null})
       }
     }
     fetchData()
-  }, [account])
+  }, [account, chainId])
   const [selectActiveItem, setSelectActiveItem] = useState('TOTAL');
   const { data: totalStaking } = useQuery(GET_STAKING_SUMMARY, {variables: {id: '0'}})
   const locked = useLocked();
@@ -55,6 +68,16 @@ export default function Staking() {
   const deusPrice = usePrice('deus-finance', 'usd');
   const ethPrice = usePrice('ethereum', 'usd');
   const bptPrice = usePrice('bpt', 'usd');
+
+  const RewardClaim = async (address) => {
+    try {
+      if(account && chainId) {
+        const swapServie = new SwapService(account, chainId)
+        swapServie.StakingContract.options.address = address
+        await swapServie.StakingContract.methods.withdraw(0).call()
+      }
+    } catch(e) { }
+  }
 
   const getRows = () => {
     const stakingData = selectActiveItem === 'TOTAL' ? totalStaking : userStaking
@@ -101,6 +124,18 @@ export default function Staking() {
         rows[i][1] = staticApi.apy[titles[i].alias] + '%'
 
       rows[i][2] = rows[i][2] + ' ' + titles[i].ticker
+
+      if(selectActiveItem === 'TOTAL') {
+        rows[i][5] = ''
+        rows[i][6] = ''
+      }
+      else {
+        rows[i][5] = formatUsd(new BigNumber(earned[i]).div(new BigNumber(10).pow(18))) + ' DEA'
+        rows[i][6] = 
+          <Button onClick={() => RewardClaim(titles[i].address)} disabled={new BigNumber(earned[i]).isEqualTo(0)}>
+            Claim DEA
+          </Button>
+      }
     }
     return rows;
   }
@@ -183,8 +218,8 @@ export default function Staking() {
       <Select left='TOTAL' right='WALLET' activeItem={selectActiveItem} setActiveItem={setSelectActiveItem} />
       <div className={styles.table}>
         <Table
-          headers={['Staking Pools', 'APY', 'Tokens', 'Value in USD', 'Value in ETH', <div className={styles.row}><span className={styles.usdText}>USD earned (coming soon)</span></div>]}
-          sizes={[20, 13, 15, 15, 15, 22]}
+          headers={['Staking Pools', 'APY', 'Tokens', 'Value in USD', 'Value in ETH', selectActiveItem === 'TOTAL' ? 'USD earned (coming soon)' : 'Claimable DEA', selectActiveItem === 'TOTAL' ? '' : '']}
+          sizes={[18, 13, 15, 15, 15, 15, 9]}
           rows={getRows()}
         />
         <div className={styles.apyContainer}>

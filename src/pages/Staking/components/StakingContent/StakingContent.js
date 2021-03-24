@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useQuery } from '@apollo/react-hooks'
 import BigNumber from 'bignumber.js'
 import { useWeb3React } from '@web3-react/core';
-import { Button } from 'antd';
 
 import { GET_STAKING_SUMMARY } from 'api/query';
 import useLocked from 'api/locked';
@@ -126,15 +125,18 @@ export default function Staking() {
       rows[i][2] = rows[i][2] + ' ' + titles[i].ticker
 
       if(selectActiveItem === 'TOTAL') {
-        rows[i][5] = ''
+        rows[i][5] = <BlurBar />
         rows[i][6] = ''
       }
       else {
         rows[i][5] = formatUsd(new BigNumber(earned[i]).div(new BigNumber(10).pow(18))) + ' DEA'
         rows[i][6] = 
-          <Button onClick={() => RewardClaim(titles[i].address)} disabled={new BigNumber(earned[i]).isEqualTo(0)}>
+          <span
+            className={new BigNumber(earned[i]).isEqualTo(0) ? styles.claim_disabled : styles.claim}
+            onClick={new BigNumber(earned[i]).isEqualTo(0) ? null : () => RewardClaim(titles[i].address)}
+          >
             Claim DEA
-          </Button>
+          </span>
       }
     }
     return rows;
@@ -161,7 +163,7 @@ export default function Staking() {
       }
     }
 
-    return formatUsd(total.div(new BigNumber(ethPrice)).toFixed(3));
+    return formatUsd(total.div(new BigNumber(ethPrice)));
   }
 
   const getTotalValueUsd = () => {
@@ -185,7 +187,7 @@ export default function Staking() {
       }
     }
     
-    return formatUsd(total.toFixed(2));
+    return formatUsd(total);
   }
 
   const getTotalStakedEth = () => {
@@ -195,7 +197,7 @@ export default function Staking() {
       staked = new BigNumber(locked.stakingLockedValue);
     }
 
-    return formatUsd(staked.div(new BigNumber(ethPrice)).toFixed(3));
+    return formatUsd(staked.div(new BigNumber(ethPrice)));
   }
 
   const getTotalStakedUsd = () => {
@@ -205,7 +207,7 @@ export default function Staking() {
       staked = new BigNumber(locked.stakingLockedValue);
     }
     
-    return formatUsd(staked.toFixed(2));
+    return formatUsd(staked);
   }
 
   return (
@@ -213,13 +215,13 @@ export default function Staking() {
       <div className={styles.topBoxes}>
         <InfoBox topText="Total Value Locked" bottomText={`${getTotalValueEth()} ETH / $${getTotalValueUsd()}`} className={styles.eachBox} />
         <InfoBox topText="Total Staked Amount" bottomText={`${getTotalStakedEth()} ETH / $${getTotalStakedUsd()}`} className={styles.eachBox} />
-        <InfoBox topText="Prices" bottomText={`$${deusPrice} DEUS – $${deaPrice} DEA`} className={styles.eachBox} />
+        <InfoBox topText="Prices" bottomText={`$${formatUsd(deusPrice)} DEUS – $${formatUsd(deaPrice)} DEA`} className={styles.eachBox} />
       </div>
       <Select left='TOTAL' right='WALLET' activeItem={selectActiveItem} setActiveItem={setSelectActiveItem} />
       <div className={styles.table}>
         <Table
-          headers={['Staking Pools', 'APY', 'Tokens', 'Value in USD', 'Value in ETH', selectActiveItem === 'TOTAL' ? 'USD earned (coming soon)' : 'Claimable DEA', selectActiveItem === 'TOTAL' ? '' : '']}
-          sizes={[18, 13, 15, 15, 15, 15, 9]}
+          headers={['Staking Pools', 'APY', 'Tokens', 'Value in USD', 'Value in ETH', selectActiveItem === 'TOTAL' ? 'USD earned' : 'Claimable DEA', selectActiveItem === 'TOTAL' ? '(coming soon)' : '']}
+          sizes={[22, 5, 17, 17, 15, 12, 12]}
           rows={getRows()}
         />
         <div className={styles.apyContainer}>

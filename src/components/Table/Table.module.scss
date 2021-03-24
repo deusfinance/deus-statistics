@@ -9,6 +9,9 @@
       font-family: Edu Monument Grotesk Mono;
       font-weight: normal;
       font-size: 15px;
+      @media (max-width: 1439px) {
+        font-size: 12px;
+      }
       line-height: 21px;
       color: #FFFFFF;
     }
@@ -28,11 +31,23 @@
         font-family: Edu Monument Grotesk Semi-Mono;
         font-weight: 400;
         font-size: 20px;
+        @media (max-width: 1600px) {
+          font-size: 15px;
+        }
+        @media (max-width: 1439px) {
+          font-size: 10px;
+        }
         line-height: 28px;
         color: #FFFFFF;
         word-break: break-all;
         .smallText {
           font-size: 12.5px;
+          @media (max-width: 1600px) {
+            font-size: 10px;
+          }
+          @media (max-width: 1439px) {
+            font-size: 7.5px;
+          }
           line-height: 17px;
           color: rgba(255, 255, 255, 0.5);
         }

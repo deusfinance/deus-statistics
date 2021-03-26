@@ -33,22 +33,24 @@
     }
   }
   .claim {
+    font-family: Edu Monument Grotesk Mono;
     background-color: white;
     color: black;
-    border-radius: 3px;
+    border-radius: 6px;
     cursor: pointer;
     text-align: center;
-    padding: 5px 15px;
+    padding: 5px 50px;
     &:hover {
       opacity: 0.5;
     }
   }
   .claim_disabled {
+    font-family: Edu Monument Grotesk Mono;
     background-color: white;
     color: gray;
-    border-radius: 3px;
-    text-align: center;
-    padding: 5px 15px;
+    border-radius: 6px;
     cursor: no-drop;
+    text-align: center;
+    padding: 5px 50px;
   }
 }

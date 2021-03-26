@@ -173,7 +173,7 @@ nav {
           border-radius: 0px 0px 5px 5px;
           .sub-nav-item {
               background: #0d0d0d;
-              border: 2px solid #808080;
+              border: 1px solid #808080;
               border-bottom-width: 1px;
               border-top: none;
               color: #ffffff;
@@ -200,7 +200,7 @@ nav {
                   // background: #831414;
                   border-bottom-left-radius: 6px;
                   border-bottom-right-radius: 6px;
-                  border-bottom-width: 2px;
+                  border-bottom-width: 1px;
               }
           }
       }
@@ -238,7 +238,7 @@ nav {
               text-align: center;
               position: relative;
               .active {
-                  border-bottom: 2px solid #808080;
+                  border-bottom: 1px solid #808080;
               }
               &:hover {
                   .nav-title {

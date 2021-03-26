@@ -1,7 +1,8 @@
 :global(.rc-tooltip-inner) {
-  background-color: #fff;
+  background-color: transparent;
+  border: 1px solid white;
   width: 90px;
-  color: black;
+  color: white;
   min-height: 20px;
   border-radius: 3px;
   padding-left: 15px;

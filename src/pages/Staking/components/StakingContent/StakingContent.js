@@ -221,7 +221,7 @@ export default function Staking() {
       <div className={styles.table}>
         <Table
           headers={['Staking Pools', 'APY', 'Tokens', 'Value in USD', 'Value in ETH', selectActiveItem === 'TOTAL' ? 'USD earned' : 'Claimable DEA', selectActiveItem === 'TOTAL' ? '(coming soon)' : '']}
-          sizes={[22, 5, 17, 17, 15, 12, 12]}
+          sizes={[20, 7, 17, 17, 15, 12, 12]}
           rows={getRows()}
         />
         <div className={styles.apyContainer}>

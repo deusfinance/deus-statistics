@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { NavLink } from 'react-router-dom';
 import MetaMaskOnboarding from '@metamask/onboarding';
 import { useWeb3React } from '@web3-react/core';
+import { notification } from 'antd';
 
 import { injected } from 'connectors';
 import { dappLink } from 'config';
@@ -17,7 +18,7 @@ const Navs = navbarItems.reverse()
 const Navbar = () => {
 
     const web3React = useWeb3React()
-    const { account, activate, chainId } = web3React
+    const { account, activate, chainId, error } = web3React
     const [menuMobileClass, setMenuMobileClass] = useState("close-menu");
     const [claimAmount, setClaim] = useState(0)
     const [web3, setWeb3] = useState(null)
@@ -77,6 +78,16 @@ const Navbar = () => {
 
         }
     }, [account, chainId])
+
+    useEffect(() => {
+        if(error !== undefined) {
+            notification['error']({
+              message: 'Connect Wallet',
+              description: error.message,
+              duration: 3
+            });
+        }
+    }, [error])
 
     const handleConnect = async () => {
         try {

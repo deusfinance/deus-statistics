@@ -18,7 +18,7 @@
   }
   .rows {
     background-color: #18181d;
-    border: 2px solid #1C1C1C;
+    border: 1px solid #1C1C1C;
     border-radius: 6px;
     .row {
       height: 90px;
@@ -30,7 +30,7 @@
       .col {
         font-family: Edu Monument Grotesk Semi-Mono;
         font-weight: 400;
-        font-size: 20px;
+        font-size: 17.5px;
         @media (max-width: 1600px) {
           font-size: 15px;
         }

@@ -4,7 +4,7 @@ import Tabs from 'components/Tabs/Tabs';
 import styles from './Staking.module.scss';
 import Staking from './components/StakingContent/StakingContent';
 
-const tabs = ['STAKING', 'VAULTS', 'TOKEN', 'MARKETS'];
+const tabs = ['STAKING', 'VAULTS'/*, 'TOKEN', 'MARKETS'*/];
 
 export default function Statistics() {
   const CurrentPage = Staking; // pages[activeTab];

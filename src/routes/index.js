@@ -16,8 +16,8 @@ export default function Routes() {
         <Redirect exact path={'/'} to={'/staking'} />
         <Route path={'/staking'} component={Staking} />
         <Route path={'/vaults'} component={Vaults} />
-        <Route path={'/token'} component={Token} />
-        <Route path={'/markets'} component={MARKETS} />
+        {/* <Route path={'/token'} component={Token} />
+        <Route path={'/markets'} component={MARKETS} /> */}
       </Switch>
       <Footer />
     </BrowserRouter>

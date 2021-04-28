@@ -32,3 +32,10 @@ export const formatSecondText = (text) => {
     return text
   }
 }
+
+export const formatIncreasing = (text) => {
+  return <span style={{ color: '#00D16C'}}>+{text}%</span>
+}
+export const formatDecreasing = (text) => {
+  return <span style={{ color: '#D40000'}}>{text}%</span>
+}

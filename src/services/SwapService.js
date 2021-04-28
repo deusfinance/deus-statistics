@@ -14,7 +14,13 @@ export class SwapService {
         this.StaticSalePrice = new this.infuraWeb3.eth.Contract(abis["sps"], this.getAddr("sps"));
         this.DeusSwapContract = new this.infuraWeb3.eth.Contract(abis["deus_swap_contract"], this.getAddr("deus_swap_contract"));
         this.uniswapRouter = new this.infuraWeb3.eth.Contract(abis["uniswap_router"], this.getAddr("uniswap_router"));
+        
         this.StakingContract = new this.infuraWeb3.eth.Contract(abis['staking']);
+
+        this.ALCHEMY_URL = 'wss://eth-' + this.getNetworkName() + '.ws.alchemyapi.io/v2/jnX7y9orebiwpy1gui4c1nBojwxcMwcK';
+        this.alchemyWeb3 = new Web3(new Web3.providers.WebsocketProvider(this.ALCHEMY_URL));
+        this.VaultContract = new this.alchemyWeb3.eth.Contract(abis['vaults']);
+        this.TokenContract = new this.alchemyWeb3.eth.Contract(abis['token']);
     }
 
     checkWallet = () => this.account && this.chainId
@@ -604,5 +610,9 @@ export class SwapService {
             .once('receipt', () => listener("receipt"))
             .once('error', () => listener("error"))
 
+    }
+
+    getHeight() {
+        return this.alchemyWeb3.eth.getBlockNumber()
     }
 }

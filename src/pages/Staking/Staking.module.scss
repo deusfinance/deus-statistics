@@ -3,6 +3,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  @media (max-width: 480px) {
+    display: none;
+  }
   .title {
     font-family: Edu Monument Grotesk Semi-Mono;
     font-weight: 400;

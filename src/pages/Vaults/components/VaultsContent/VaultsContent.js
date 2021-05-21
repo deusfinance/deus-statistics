@@ -112,45 +112,40 @@ export default function Vaults() {
 
   useEffect(() => {
     async function fetchData() {
-      if(account && chainId) {
-        try {
-          const swapServie = new SwapService(account, chainId)
-          const oneDayBefore = await swapServie.getHeight() -5760
-          let newVaults = [], newGrowth = new BigNumber(0), tvl = new BigNumber(0)
-          for (let i = 0; i < 5; i ++) {
-            try {
-              swapServie.VaultContract.options.address = titles[i].address
-              const token_address = await swapServie.VaultContract.methods.lockedToken().call()
-              swapServie.TokenContract.options.address = token_address
-              const currBal = await swapServie.TokenContract.methods.balanceOf(titles[i].address).call(null)
-              const prevBal = await swapServie.TokenContract.methods.balanceOf(titles[i].address).call(null, oneDayBefore)
-              let vault = {
-                tvl: new BigNumber(currBal).div(new BigNumber(10).pow(18)),
-                growth: (new BigNumber(currBal).times(100).div(new BigNumber(prevBal)).minus(100)).toFixed(2),
-                tokens: (new BigNumber(currBal)).div(new BigNumber(10).pow(18)).toFixed(2)
-              }
-              newVaults.push(vault)
-              newGrowth = newGrowth.plus(vault.tvl.times(vault.growth))
-              tvl = tvl.plus(vault.tvl)
-            } catch(e) {
-              newVaults = null
-              console.error(e)
+      try {
+        const swapServie = new SwapService('', 1)
+        const oneDayBefore = await swapServie.getHeight() -5760
+        let newVaults = [], newGrowth = new BigNumber(0), tvl = new BigNumber(0)
+        for (let i = 0; i < 5; i ++) {
+          try {
+            swapServie.VaultContract.options.address = titles[i].address
+            const token_address = await swapServie.VaultContract.methods.lockedToken().call()
+            swapServie.TokenContract.options.address = token_address
+            const currBal = await swapServie.TokenContract.methods.balanceOf(titles[i].address).call(null)
+            const prevBal = await swapServie.TokenContract.methods.balanceOf(titles[i].address).call(null, oneDayBefore)
+            let vault = {
+              tvl: new BigNumber(currBal).div(new BigNumber(10).pow(18)),
+              growth: (new BigNumber(currBal).times(100).div(new BigNumber(prevBal)).minus(100)).toFixed(2),
+              tokens: (new BigNumber(currBal)).div(new BigNumber(10).pow(18)).toFixed(2)
             }
+            newVaults.push(vault)
+            newGrowth = newGrowth.plus(vault.tvl.times(vault.growth))
+            tvl = tvl.plus(vault.tvl)
+          } catch(e) {
+            newVaults = null
+            console.error(e)
           }
-          setVaults(newVaults)
-          setTotalGRowth(newGrowth.div(tvl).toFixed(2))
-        } catch(e) {
-          setVaults(null)
-          setTotalGRowth(0)
-          console.error(e)
         }
-      } else {
+        setVaults(newVaults)
+        setTotalGRowth(newGrowth.div(tvl).toFixed(2))
+      } catch(e) {
         setVaults(null)
         setTotalGRowth(0)
+        console.error(e)
       }
     }
     fetchData()
-  }, [account, chainId])
+  }, [])
 
   const getRows = () => {
     let vaultLocked = 0
